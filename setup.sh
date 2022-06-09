@@ -5,12 +5,11 @@ value=$(curl 192.168.1.9/api//v1/control/local-dws/ | jq '.data.result.value')
 #DWS on if value = true, off if value = false
 #value is located at data: result: value
 
-
-echo ${value} #display value -debug
-
-if [ value = "true" ] #Temp - goal: if true do nothing, if false turn on
+if [ ${value} = "true" ] #Temp - goal: if true do nothing, if false turn on
 then
-	echo 'True'
+	echo 'local-DWS is on'
 else
-	echo 'False'
+	echo 'local-DWS is off, enabling... \n'
+	curl -X PUT 192.168.1.9/api//v1/control/local-dws/
+	echo 'local-DWS enabled'
 fi
